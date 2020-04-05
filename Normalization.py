@@ -6,9 +6,14 @@ merged = []  # epmty DataFrame to place normalized values into
 i = 0  # iteration counter
 
 
+# Function to normalize XYE file
+# XYE file contains three columns, x values (2 theta), y values (intensity) and error
+# Passed the file name and returns a dataframe with the normalized data
 def normalize(file):
-    # import xye file
-    df = pd.read_csv(file, sep='\s+', index_col=0, names=['2Theta', file, 'Error'])
+    # Import file, sep='\s+' for XYE 
+    # Set the 2 theta values to the index 
+    # Labele the 2 theta column with 2Theta, intensity column with the file name, error column with Error
+    df = pd.read_csv(file, sep='\s+', index_col=0, names=['2Theta', file, 'Error']) #
 
     # remove Error column
     df = df.drop(columns=['Error'])
@@ -17,7 +22,7 @@ def normalize(file):
     dfmin = df[file].min()
     dfmax = df[file].max()
 
-    # normalize
+    # normalize formula
     df[file] = (df[file] - dfmin) / (dfmax - dfmin)
 
     # export normalized data as CSV
