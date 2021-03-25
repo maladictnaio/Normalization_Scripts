@@ -13,12 +13,8 @@ i = 0  # iteration counter
 # custom variables
 extension = '.csv'                           # file type to process
 ind_var = '2Theta'                           # name of indipendent variable all data have in common
-comb_norm_name = 'combined normalized data'  # file name for combined normalized data
-comb_name = 'combined data set'              # file name for combined data 
 
-# custom settings
-export_individual = True     # export individual Excel files (True or False)
-export_combined = False      # export combined Excel file (True or False)                  
+# custom settings                
 normalize_data = False       # normalizes data (True or False)
 graph_data = True            # graphs the processed data (True or False)
 
@@ -60,13 +56,6 @@ def read(file):
     # call normalize function
     if normalize_data == True:
         df = normalize(df, filename)
-
-    # export normalized data as xlsx (Excel)
-    if export_individual == True:
-        if normalize_data == True:
-            df.to_excel(filename + ' normalized.xlsx')
-        else: 
-            df.to_excel(filename + '.xlsx') 
 
     return df 
 
@@ -117,13 +106,6 @@ if stack == True:
         i = i + 1
     graph(merged)
 
-# exports the merged files to excel
-if export_combined == True:
-    if normalize_data == True:
-        merged.to_excel(comb_norm_name + 'xlsx')
-    else: 
-        merged.to_excel(comb_name + '.xlsx')
-
-# shows the two plots
+# shows the plots
 if graph_data == True:
     plt.show()
